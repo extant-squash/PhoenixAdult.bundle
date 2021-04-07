@@ -14,6 +14,7 @@ from cStringIO import StringIO
 from datetime import datetime
 from dateutil.parser import parse
 from PIL import Image
+from traceback import format_exc
 import PAactors
 import PAgenres
 import PAsearchSites
@@ -92,7 +93,10 @@ class PhoenixAdultAgent(Agent.Movies):
             if provider is not None:
                 providerName = getattr(provider, '__name__')
                 Log('Provider: %s' % providerName)
-                provider.search(results, lang, siteNum, search)
+                try:
+                    provider.search(results, lang, siteNum, search)
+                except Exception as e:
+                    Log.Error(format_exc())
 
         if Prefs['metadataapi_enable'] and providerName != 'networkMetadataAPI' and (siteNum is None or not results or 100 != max([result.score for result in results])):
             siteNum = PAsearchSites.getSiteNumByFilter('MetadataAPI')
@@ -104,7 +108,7 @@ class PhoenixAdultAgent(Agent.Movies):
                     try:
                         provider.search(results, lang, siteNum, search)
                     except Exception as e:
-                        Log.Error(e)
+                        Log.Error(format_exc())
 
         results.Sort('score', descending=True)
 
@@ -141,20 +145,20 @@ class PhoenixAdultAgent(Agent.Movies):
         metadata.content_rating = 'XXX'
 
         if Prefs['custom_title_enable']:
-            metadata.title = Prefs['custom_title'].format(
-                title = metadata.title,
-                actors = ", ".join([(x.name).encode('ascii', 'ignore') for x in metadata.roles]),
-                studio = metadata.studio,
-                series = ", ".join(set([(x).encode('ascii', 'ignore') for x in metadata.collections if x not in metadata.studio]))
-            )
-            Log("Custom Title: %s" % metadata.title)
+            data = {
+                'title': metadata.title,
+                'actors': ', '.join([actor.name.encode('ascii', 'ignore') for actor in metadata.roles]),
+                'studio': metadata.studio,
+                'series': ', '.join(set([collection.encode('ascii', 'ignore') for collection in metadata.collections if collection not in metadata.studio])),
+            }
+            metadata.title = Prefs['custom_title'].format(**data)
 
 
 def getSearchTitle(title):
     trashTitle = (
         'RARBG', 'COM', r'\d{3,4}x\d{3,4}', 'HEVC', r'H\d{3}', 'AVC', r'\dK',
         r'\d{3,4}p', 'TOWN.AG_', 'XXX', 'MP4', 'KLEENEX', 'SD', 'HD',
-        'KTR', 'IEVA', 'WRB', 'NBQ', 'ForeverAloneDude', r'X\d{3}', 'SoSuMi'
+        'KTR', 'IEVA', 'WRB', 'NBQ', 'ForeverAloneDude', r'X\d{3}', 'SoSuMi',
     )
 
     for trash in trashTitle:
