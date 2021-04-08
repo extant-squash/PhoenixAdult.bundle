@@ -254,14 +254,11 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
     images = []
     posterExists = False
     Log('Artwork found: %d' % len(art))
-    numPosters = 20
     numArt = 5
     for idx, posterUrl in enumerate(art, 1):
         if not PAsearchSites.posterAlreadyExists(posterUrl, metadata):
             # Download image file for analysis
             try:
-                if random.randint(0,1) == 0 and idx != 0:
-                    continue
                 image = PAutils.HTTPRequest(posterUrl, headers={'Referer': 'http://www.data18.empirestores.co'})
                 images.append(image)
                 im = StringIO(image.content)
@@ -270,14 +267,12 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
                 # Add the image proxy items to the collection
                 if height > width:
                     # Item is a poster
-                    if numPosters != 0:
-                        numPosters = numPosters - 1
-                    else:
-                        continue
                     posterExists = True
                     metadata.posters[posterUrl] = Proxy.Media(image.content, sort_order=idx)
                 if width > height:
                     # Item is an art item
+                    if random.randint(0,1) == 0:
+                        continue
                     if numArt != 0:
                         numArt = numArt - 1
                     else:
