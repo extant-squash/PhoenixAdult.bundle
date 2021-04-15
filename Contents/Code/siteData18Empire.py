@@ -170,7 +170,12 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
         metadata.title = ("%s [Scene %s]" % (metadata.title, metadata_id[3]))
 
     # Summary
-    metadata.summary = detailsPageElements.xpath('//div[@class="synopsis"]')[0].text_content().strip()
+    summary = ''
+    try:
+        summary = detailsPageElements.xpath('//div[@class="synopsis"]')[0].text_content().strip()
+    except:
+        pass
+    metadata.summary = summary
 
     # Studio
     try:
@@ -214,7 +219,10 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
     if splitScene:
         actorNames = detailsPageElements.xpath('//div[@class="item-grid item-grid-scene"]/div[@class="grid-item"][%d]/div/div[@class="scene-cast-list"]/a/text()' % int(metadata_id[3]))
         for name in actorNames:
-            actors.append(detailsPageElements.xpath('//div[@class="video-performer"]/a[./img[@title="%s"]]/span/span' % (name))[0])
+            try:
+                actors.append(detailsPageElements.xpath('//div[@class="video-performer"]/a[./img[@title="%s"]]/span/span' % (name))[0])
+            except:
+                pass
     else:
         actors = detailsPageElements.xpath('//div[@class="video-performer"]/a/span/span')
     for actorLink in actors:
@@ -244,6 +252,9 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
         gallery = detailsPageElements.xpath(gallery)
         if gallery:
             req = PAutils.HTTPRequest('%s%s' % (PAsearchSites.getSearchBaseURL(siteNum), gallery[0]))
+            galleryPageElement = HTML.ElementFromString(req.text)
+            art = art + galleryPageElement.xpath(gallery_image)
+            req = PAutils.HTTPRequest('%s%s?page=2' % (PAsearchSites.getSearchBaseURL(siteNum), gallery[0]))
             galleryPageElement = HTML.ElementFromString(req.text)
             art = art + galleryPageElement.xpath(gallery_image)
         if splitScene:

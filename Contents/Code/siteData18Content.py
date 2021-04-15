@@ -157,30 +157,45 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
     except:
         pass
 
-    # Studio
+     # Studio
     try:
-        metadata.studio = detailsPageElements.xpath('//i[contains(., "Network")]//preceding-sibling::a[1]')[0].text_content().strip()
+        studio = detailsPageElements.xpath('//i[contains(., "Network")]//preceding-sibling::a[1]')[0].text_content().strip()
     except:
         try:
-            metadata.studio = detailsPageElements.xpath('//i[contains(., "Studio")]//preceding-sibling::a[1]')[0].text_content().strip()
+            studio = detailsPageElements.xpath('//i[contains(., "Studio")]//preceding-sibling::a[1]')[0].text_content().strip()
         except:
-            pass
+            try:
+                studio = detailsPageElements.xpath('//i[contains(., "Site")]//preceding-sibling::a[1]')[0].text_content().strip()
+            except:
+                studio = ''
+
+    if studio:
+        metadata.studio = studio
 
     # Tagline and Collection(s)
     metadata.collections.clear()
+    tagline = ''
     try:
         tagline = detailsPageElements.xpath('//i[contains(., "Site")]//preceding-sibling::a[1]')[0].text_content().strip()
+    except:
+        pass
+    try:
         if len(metadata_id) > 3:
             Log('Using original series information')
             tagline = detailsPageElements.xpath('//p[contains(., "Serie")]//a[@title]')[0].text_content().strip()
             metadata.title = ("%s [Scene %s]" % (metadata_id[3], metadata_id[4]))
-        if not metadata.studio:
-            metadata.studio = tagline
-        else:
-            metadata.tagline = tagline
-        metadata.collections.add(tagline)
     except:
+        pass
+
+    if not metadata.studio:
+        metadata.studio = tagline
         metadata.collections.add(metadata.studio)
+    else:
+        metadata.tagline = tagline
+        metadata.collections.add(tagline)
+
+    Log("Studio: %s" % studio)
+    Log("Tagline: %s" % tagline)
 
     # Release Date
     if sceneDate:
