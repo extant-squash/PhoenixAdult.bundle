@@ -48,7 +48,7 @@ def ValidatePrefs():
 
 class PhoenixAdultAgent(Agent.Movies):
     name = 'PhoenixAdult'
-    languages = [Locale.Language.English, Locale.Language.German, Locale.Language.French, Locale.Language.Spanish, Locale.Language.Italian]
+    languages = [Locale.Language.English, Locale.Language.German, Locale.Language.French, Locale.Language.Spanish, Locale.Language.Italian, Locale.Language.Dutch]
     accepts_from = ['com.plexapp.agents.localmedia', 'com.plexapp.agents.lambda']
     primary_provider = True
 
@@ -75,7 +75,7 @@ class PhoenixAdultAgent(Agent.Movies):
             Log('***MEDIA TITLE [from directory]*** %s' % newTitle)
             searchSettings = PAsearchSites.getSearchSettings(newTitle)
 
-            if searchSettings['siteNum'] is not None and searchSettings['searchTitle'].lower() == PAsearchSites.getSearchSiteName(searchSettings['siteNum']).lower():
+            if searchSettings['siteNum'] is None or searchSettings['searchTitle'].lower().replace(' ', '') == PAsearchSites.getSearchSiteName(searchSettings['siteNum']).lower().replace(' ', ''):
                 newTitle = '%s %s' % (newTitle, title)
                 Log('***MEDIA TITLE [from directory + media.name]*** %s' % newTitle)
                 searchSettings = PAsearchSites.getSearchSettings(newTitle)
