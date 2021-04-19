@@ -2750,4 +2750,8 @@ def getProviderFromSiteNum(siteNum):
         elif siteNum == 1334:
             provider = siteAdultEmpire
 
+        # Adult Empire
+        elif siteNum == 1334:
+            provider = siteAdultEmpire
+
     return provider
