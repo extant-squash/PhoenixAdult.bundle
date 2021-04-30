@@ -6,13 +6,14 @@ import re
 from pathlib import Path
 import argparse
 import logging
+import json
 
 import requests
 from watchdog.observers.polling import PollingObserver as Observer
 from watchdog.events import FileSystemEventHandler
 
 
-FILE_NAME_FORMAT = '{site} - {date} - {title} ~ {actors}'
+FILE_NAME_FORMAT = '{site}/{title} - {date} ~ {actors}'
 EXTENSIONS = (
     '.mp4', '.mkv', '.avi', '.wmv'
 )
@@ -87,13 +88,16 @@ def work_with_file(file_path):
                     if title:
                         title_clean = False
 
+                if not new_file_name.parent.is_dir():
+                    new_file_name.parent.mkdir(parents=True, exist_ok=True)
+
                 if cleanup and not title_clean:
                     cleanup_metadata(file_path, new_file_name)
                 else:
                     file_path.rename(new_file_name)
-                logging.info('Saving as `%s`', new_file_name.name)
+                logging.info('Saving as `%s`', new_file_name)
             else:
-                logging.error('Already exist `%s`', new_file_name.name)
+                logging.error('Already exist `%s`', new_file_name)
         else:
             logging.info('Nothing found')
 
@@ -117,6 +121,33 @@ def get_new_file_name(data):
 
 def get_data_from_api(file_path, ohash):
     logging.info('Searching `%s`', file_path)
+
+    if ohash:
+        url = 'https://stashdb.org/graphql'
+        headers = {
+            'Content-Type': 'application/json',
+            'apiKey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhZTA1NmQ0ZC0wYjRmLTQzNmMtYmVhMy0zNjNjMTQ2MmZlNjMiLCJpYXQiOjE1ODYwNDAzOTUsInN1YiI6IkFQSUtleSJ9.5VENvrLtJXTGcdOhA0QC1SyPQ59padh1XiQRDQelzA4',
+        }
+        data = {
+            'operationName': 'Scene',
+            'variables': {
+                'fingerprints': [ohash],
+            },
+            'query': 'query Scene($fingerprints:[String!]!){findScenesByFingerprints(fingerprints:$fingerprints){date title studio{name}}}',
+        }
+
+        response = requests.post(url, headers=headers, data=json.dumps(data)).json()
+        if 'data' in response and response['data'] and response['data']['findScenesByFingerprints'] and response['data']['findScenesByFingerprints'][0]:
+            response = response['data']['findScenesByFingerprints'][0]
+
+            result = {
+                'title': response['title'],
+                'date': response['date'],
+                'site': response['studio']['name'].replace(' ', ''),
+            }
+            file_path = '{site} - {date} - {title}'.format(**result)
+
+            logging.info('Founded in StashDB searching `%s`', file_path)
 
     url = 'https://api.metadataapi.net/scenes?parse=%s&limit=1' % file_path
     if ohash:
@@ -212,6 +243,15 @@ if __name__ == '__main__':
                 import oshash
             except ImportError:
                 OHASH = False
+
+        CACHE = True
+        try:
+            import requests_cache
+        except:
+            CACHE = False
+
+        if CACHE:
+            requests_cache.install_cache('main')
 
         if IMPORTED:
             if not additional_info:
