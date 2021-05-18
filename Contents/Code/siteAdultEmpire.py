@@ -25,7 +25,6 @@ def search(results, lang, siteNum, searchData):
     if scene_break:
         scene_break = (scene_break.group().strip(), searchData.title[-1])
         searchData.title = scene_break[0]
-        Log("scenebreak: %s %s" % (scene_break[0], scene_break[1]))
 
     searchData.encoded = searchData.title.replace(' ', '+')
     searchURL = '%s%s' % (PAsearchSites.getSearchSearchURL(siteNum), searchData.encoded)
@@ -89,7 +88,7 @@ def search(results, lang, siteNum, searchData):
                         section = 'Scene %d' % (sceneNum + 1)
                         actorNames = ', '.join(detailsPageElements.xpath('//div[@class="container"]/div[@class="row"][./div[@class="col-sm-6 text-right text-left-xs m-b-1"]][%d]/div[2]/div/a/text()' % (sceneNum + 1)))
 
-                        if scene_break and titleNoFormatting == scene_break[0] and sceneNum + 1 == int(scene_break[1]):
+                        if scene_break and titleNoFormatting.replace('-', ' ') == scene_break[0] and sceneNum + 1 == int(scene_break[1]):
                             scene_matched = True
                             results.Append(MetadataSearchResult(id='%s|%d|%s|%d' % (curID, siteNum, releaseDate, sceneNum + 1), name='%s/#%d[%s][%s] %s' % (titleNoFormatting, sceneNum + 1, actorNames, studio, displayDate), score=100, lang=lang))
                             break
@@ -241,7 +240,10 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
 
     for actorLink in actors:
         actorName = actorLink.text_content().strip()
-        actorPhotoURL = detailsPageElements.xpath('//div[@class="itempage"]/div/div[@class="row"]/div[@class="col-sm-3 col-md-4 col-lg-3 m-b-2"]/div/a[@label="Performer"][contains(., "%s")]//img/@src' % actorName)[0].strip()
+        try:
+            actorPhotoURL = detailsPageElements.xpath('//div[@class="itempage"]/div/div[@class="row"]/div[@class="col-sm-3 col-md-4 col-lg-3 m-b-2"]/div/a[@label="Performer"][contains(., "%s")]//img/@src' % actorName)[0].strip()
+        except:
+            continue
         if actorName:
             movieActors.addActor(actorName, actorPhotoURL)
 
