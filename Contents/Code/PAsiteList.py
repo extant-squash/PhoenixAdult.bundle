@@ -129,6 +129,7 @@ import networkScoreGroup
 import siteTwoTGirls
 import siteSicflics
 import networkModelCentro
+import siteAlettaOceanLive
 import siteCulioneros
 import networkPornWorld
 import siteMormonGirlz
@@ -167,7 +168,6 @@ import siteJVRPorn
 import networkGrooby
 import siteAdultEmpire
 import siteFamilyTherapy
-import siteFit18
 
 searchSites = {
     0: ('BlackedRaw', 'https://www.blackedraw.com', '/api'),
@@ -973,7 +973,7 @@ searchSites = {
     800: ('ClubSweethearts', 'https://www.clubsweethearts.com', '/video.php?slug='),
     801: ('Elegant Angel', 'https://www.elegantangel.com', '/Search?q='),
     802: ('Family Sinners', 'https://www.familysinners.com', 'https://site-api.project1service.com'),
-    803: ('ReidMyLips', 'https://www.reidmylips.com', '/'),
+    803: ('ReidMyLips', 'https://www.reidmylips.com', '/updates/'),
     804: ('Playboy Plus', 'https://www.playboyplus.com', '/search'),
     805: ('Meana Wolf', 'https://meanawolf.elxcomplete.com', '/search.php?query='),
     806: ('Transsensual', 'https://www.transsensual.com', 'https://site-api.project1service.com'),
@@ -1194,7 +1194,7 @@ searchSites = {
     1021: ('Scoreland', 'https://www.scoreland.com', '/big-boob-videos/'),
     1022: ('TwoTGirls', 'https://twotgirls.com', '/videos?query='),
     1023: ('Sicflics', 'https://www.sicflics.com', '/search/'),
-    1024: ('AlettaOceanLive', 'https://www.alettaoceanlive.com', '/sapi/'),
+    1024: ('AlettaOceanLive', 'https://www.alettaoceanlive.com', '/tour/categories/movies_%d_d.html'),
     1025: ('FallInLovia', 'https://www.fallinlovia.com', '/sapi/'),
     1026: ('RomiRain', 'https://www.romirain.com', '/sapi/'),
     1027: ('JerkOffWithMe', 'https://www.jerkoffwithme.com', '/sapi/'),
@@ -1208,7 +1208,7 @@ searchSites = {
     1035: ('Lisey Sweet', 'https://theliseysweet.com', '/sapi/'),
     1036: ('MyLifeInMiami', 'https://mylifeinmiami.com', '/sapi/'),
     1037: ('GinaGerson', 'https://www.ginagerson.xxx', '/sapi/'),
-    1038: ('ValeNappi', 'https://www.valenappi.com', '/sapi/'),
+    1038: (),
     1039: ('VinaSkyXXX', 'https://www.vinaskyxxx.com', '/sapi/'),
     1040: ('Culioneros', 'http://www.pornditos.com', '/t1/videos/0_'),
     1041: ('Sexo en Public', 'http://www.pornditos.com', '/t1/videos/0_'),
@@ -1506,7 +1506,6 @@ searchSites = {
     1333: ('Grooby Girls', 'https://www.groobygirls.com', '/tour/trailers/'),
     1334: ('Adult Empire', 'https://www.adultempire.com', '/allsearch/search?q='),
     1335: ('Family Therapy', 'https://familytherapyxxx.com/', '/?s='),
-    1336: ('Fit 18', 'https://www.fit18.com', '/models/'),
 }
 
 abbreviations = (
@@ -2602,8 +2601,12 @@ def getProviderFromSiteNum(siteNum):
         elif siteNum == 1023:
             provider = siteSicflics
 
+        # AlettaOceanLive
+        elif siteNum == 1024:
+            provider = siteAlettaOceanLive
+
         # ModelCentro network
-        elif (1024 <= siteNum <= 1039) or siteNum == 1051 or siteNum == 1058 or siteNum == 1075 or siteNum == 1191 or siteNum == 1245:
+        elif (1025 <= siteNum <= 1039) or siteNum == 1051 or siteNum == 1058 or siteNum == 1075 or siteNum == 1191 or siteNum == 1245:
             provider = networkModelCentro
 
         # Culioneros
@@ -2757,9 +2760,5 @@ def getProviderFromSiteNum(siteNum):
         # Family Therapy
         elif siteNum == 1335:
             provider = siteFamilyTherapy
-
-        # Fit 18
-        elif siteNum == 1336:
-            provider = siteFit18
 
     return provider
