@@ -87,8 +87,7 @@ def search(results, lang, siteNum, searchData):
                     for sceneNum in range(0, sceneCount):
                         section = 'Scene %d' % (sceneNum + 1)
                         actorNames = ', '.join(detailsPageElements.xpath('//div[@class="container"]/div[@class="row"][./div[@class="col-sm-6 text-right text-left-xs m-b-1"]][%d]/div[2]/div/a/text()' % (sceneNum + 1)))
-
-                        if scene_break and titleNoFormatting.replace('-', ' ') == scene_break[0] and sceneNum + 1 == int(scene_break[1]):
+                        if scene_break and titleNoFormatting.replace('-', ' ').lower() == scene_break[0].lower() and sceneNum + 1 == int(scene_break[1]):
                             scene_matched = True
                             results.Append(MetadataSearchResult(id='%s|%d|%s|%d' % (curID, siteNum, releaseDate, sceneNum + 1), name='%s/#%d[%s][%s] %s' % (titleNoFormatting, sceneNum + 1, actorNames, studio, displayDate), score=100, lang=lang))
                             break
