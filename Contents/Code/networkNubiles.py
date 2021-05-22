@@ -126,7 +126,7 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
     # Posters
     art = []
     xpaths = [
-        '//video/@poster'
+        '//video/@poster',
     ]
     for xpath in xpaths:
         for poster in detailsPageElements.xpath(xpath):
@@ -135,10 +135,10 @@ def update(metadata, lang, siteNum, movieGenres, movieActors):
 
             art.append(poster)
 
-    galleryURL = PAsearchSites.getSearchBaseURL(siteNum) + detailsPageElements.xpath('//div[@class="col-12 col-md-5 col-lg-7 content-pane-related-links"]/a[contains(.,"Pic")]/@href')[0]
+    galleryURL = PAsearchSites.getSearchBaseURL(siteNum) + detailsPageElements.xpath('//div[contains(@class, "content-pane-related-links")]/a[contains(., "Pic")]/@href')[0]
     req = PAutils.HTTPRequest(galleryURL)
     photoPageElements = HTML.ElementFromString(req.text)
-    for poster in photoPageElements.xpath('//div[@class="img-wrapper"]/a/picture/source[1]/@srcset'):
+    for poster in photoPageElements.xpath('//div[@class="img-wrapper"]//picture/source[1]/@srcset'):
         if not poster.startswith('http'):
             poster = 'http:' + poster
 
