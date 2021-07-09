@@ -169,6 +169,13 @@ import networkGrooby
 import siteAdultEmpire
 import siteFamilyTherapy
 import siteFit18
+import siteDarkRoomVR
+import sitePuba
+import siteStasyQ
+import siteBoundHoneys
+import siteLustomic
+import siteStraponCum
+import siteHotwifeXXX
 
 searchSites = {
     0: ('BlackedRaw', 'https://www.blackedraw.com', '/api'),
@@ -1508,6 +1515,23 @@ searchSites = {
     1334: ('Adult Empire', 'https://www.adultempire.com', '/allsearch/search?q='),
     1335: ('Family Therapy', 'https://familytherapyxxx.com/', '/?s='),
     1336: ('Fit 18', 'https://www.fit18.com', '/models/'),
+    1337: ('SpankMonster', 'https://spankmonster.com', '/MemberSceneSearch?q='),
+    1338: ('Femout', 'https://www.femout.xxx', '/tour/trailers/'),
+    1339: ('TGirls', 'https://www.tgirls.xxx', '/tour/trailers/'),
+    1340: ('TGirls Porn', 'https://www.tgirls.porn', '/tour/trailers/'),
+    1341: ('Brazilian Transsexuals', 'https://www.brazilian-transsexuals.com', '/tour/trailers/'),
+    1342: ('TS Casting Couch', 'https://www.ts-castingcouch.com', '/tour/trailers/'),
+    1343: ('Black TGirls', 'https://www.black-tgirls.com', '/tour/trailers/'),
+    1344: ('Christy Marks', 'https://www.christymarks.com', '/videos/'),
+    1345: ('ScorelandTwo', 'https://www.scoreland2.com', '/big-boob-scenes/'),
+    1346: ('DarkRoomVR', 'https://darkroomvr.com', '/search?q='),
+    1347: ('Puba', 'https://www.puba.com', '/pornstarnetwork/'),
+    1348: ('StasyQ', 'https://www.stasyq.com', '/r/Q/'),
+    1349: ('Bound Honeys', 'https://www.boundhoneys.com', '/search.php?search='),
+    1350: ('Lustomic', 'https://lustomic.com', '/video_preview_page.php?iID='),
+    1351: ('Girl Grind', 'https://www.girlgrind.com', 'https://site-api.project1service.com'),
+    1352: ('Strapon Cum', 'https://straponcum.com', '/updates/'),
+    1353: ('HotwifeXXX', 'http://www.hotwifexxx.com', '/tour_hwxxx/'),
 }
 
 abbreviations = (
@@ -1706,6 +1730,7 @@ abbreviations = (
     ('^sart ', 'SexArt '),
     ('^sas ', 'SexandSubmission '),
     ('^sbj ', 'StreetBlowjobs '),
+    ('^scoreland2', 'ScorelandTwo '),
     ('^seb ', 'SexuallyBroken '),
     ('^sed ', 'SexualDisgrace '),
     ('^Shes New ', 'She\'s New '),
@@ -1764,7 +1789,7 @@ def getProviderFromSiteNum(siteNum):
             provider = networkStrike3
 
         # Brazzers
-        elif siteNum == 2 or (54 <= siteNum <= 81) or siteNum == 582 or siteNum == 690:
+        elif siteNum == 2 or (54 <= siteNum <= 81) or siteNum == 582 or siteNum == 690 or siteNum == 1351:
             provider = network1service
 
         # MetadataAPI
@@ -2364,7 +2389,7 @@ def getProviderFromSiteNum(siteNum):
             provider = siteVivid
 
         # AdultEmpireCash Network
-        elif siteNum == 815 or siteNum == 1248 or (1257 <= siteNum <= 1262):
+        elif siteNum == 815 or siteNum == 1248 or (1257 <= siteNum <= 1262) or siteNum == 1337:
             provider = networkAdultEmpireCash
 
         # PJGirls
@@ -2592,7 +2617,7 @@ def getProviderFromSiteNum(siteNum):
             provider = siteWoodmanCastingX
 
         # ScoreGroup
-        elif (1012 <= siteNum <= 1021):
+        elif (1012 <= siteNum <= 1021) or (1344 <= siteNum <= 1345):
             provider = networkScoreGroup
 
         # TwoTGirls
@@ -2751,8 +2776,8 @@ def getProviderFromSiteNum(siteNum):
         elif siteNum == 1330:
             provider = siteData18Empire
 
-        # TGirl Japan (Hardcore)
-        elif (1331 <= siteNum <= 1333):
+        # Grooby Network
+        elif (1331 <= siteNum <= 1333) or (1338 <= siteNum <= 1343):
             provider = networkGrooby
         
         # Adult Empire
@@ -2766,5 +2791,32 @@ def getProviderFromSiteNum(siteNum):
         # Fit 18
         elif siteNum == 1336:
             provider = siteFit18
+
+        # DarkRoomVR
+        elif siteNum == 1346:
+            provider = siteDarkRoomVR
+
+        elif siteNum == 1347:
+            provider = sitePuba
+
+        # StasyQ
+        elif (1348 == siteNum):
+            provider = siteStasyQ
+
+        # Bound Honeys
+        elif siteNum == 1349:
+            provider = siteBoundHoneys
+
+        # Lustomic
+        elif siteNum == 1350:
+            provider = siteLustomic
+
+        # Strapon Cum
+        elif siteNum == 1352:
+            provider = siteStraponCum
+
+        # HotwifeXXX
+        elif siteNum == 1353:
+            provider = siteHotwifeXXX
 
     return provider
