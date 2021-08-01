@@ -158,13 +158,13 @@ class PhoenixAdultAgent(Agent.Movies):
         # Add Content Rating
         metadata.content_rating = 'XXX'
 
-        if len(str(metadata.id).split('|')) > 3 and "Brazzers" != metadata.studio:
+        if len(str(metadata.id).split('|')) > 3 and "Brazzers" != metadata.studio and "Mylf" != metadata.studio:
             metadata.title = "[%s] %s" % (', '.join([actor.name.encode('ascii', 'ignore') for actor in metadata.roles]), metadata.title)
         elif Prefs['custom_title_enable']:
             data = {
                 'title': metadata.title,
                 'actors': ', '.join([actor.name.encode('ascii', 'ignore') for actor in metadata.roles]),
                 'studio': metadata.studio,
-                'series': ', '.join(set([collection.encode('ascii', 'ignore') for collection in metadata.collections if collection not in metadata.studio])),
+                'series': ', '.join(set([collection.encode('ascii', 'ignore') for collection in metadata.collections])),
             }
             metadata.title = Prefs['custom_title'].format(**data)
