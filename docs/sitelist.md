@@ -931,6 +931,7 @@ The above is a reference list. Please see [the manualsearch doc](./manualsearch.
   - Tiny4k
 + #### Plumper Pass | Matching type: *[Enhanced](./manualsearch.md#enhanced-search)*
 + #### PornstarPlatinum | Matching type: *[Enhanced](./manualsearch.md#enhanced-search)*
++ #### POVR | Matching type: *[Limited](./manualsearch.md#limited-search)*
 + #### PrettyDirty | Matching type: *[Enhanced](./manualsearch.md#enhanced-search)*
 + #### Private | Matching type: *[Limited](./manualsearch.md#limited-search)*
   - Anal Introductions
@@ -1157,6 +1158,7 @@ The above is a reference list. Please see [the manualsearch doc](./manualsearch.
   - Teens Natural Way
   - Teens Try Black
   - We Need New Talents
+  - White Teens Black Cocks
   - X Core Club
 + #### TeenMegaWorld Network | Matching type: *[Enhanced](./manualsearch.md#enhanced-search)*
   - 18 First Sex
